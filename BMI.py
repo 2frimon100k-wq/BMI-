@@ -1,3 +1,5 @@
+import streamlit as st
+
 def calculate_bmi(weight, height):
     bmi = weight / (height ** 2)
     return round(bmi, 2)
@@ -12,17 +14,20 @@ def bmi_category(bmi):
     else:
         return "স্থূলতা (Obese)"
 
-# Input নেওয়া
-print("======= BMI Calculator =======")
-name = input("আপনার নাম লিখুন: ")
-weight = float(input("আপনার ওজন লিখুন (কেজিতে): "))
-height = float(input("আপনার উচ্চতা লিখুন (মিটারে, যেমন: 1.75): "))
-bmi = calculate_bmi(weight, height)
-category = bmi_category(bmi)
-print("\n====== আপনার ফলাফল ======")
-print(f"নাম       : {name}")
-print(f"ওজন       : {weight} kg")
-print(f"উচ্চতা    : {height} m")
-print(f"আপনার BMI : {bmi}")
-print(f"অবস্থা    : {category}")
-print("Produced by REDWAN")
+st.title("======= BMI Calculator =======")
+
+name = st.text_input("আপনার নাম লিখুন:")
+weight = st.number_input("আপনার ওজন লিখুন (কেজিতে):", min_value=1.0)
+height = st.number_input("আপনার উচ্চতা লিখুন (মিটারে, যেমন: 1.75):", min_value=0.1)
+
+if st.button("Calculate BMI"):
+    bmi = calculate_bmi(weight, height)
+    category = bmi_category(bmi)
+
+    st.write("## ====== আপনার ফলাফল ======")
+    st.write(f"**নাম       :** {name}")
+    st.write(f"**ওজন       :** {weight} kg")
+    st.write(f"**উচ্চতা    :** {height} m")
+    st.write(f"**আপনার BMI :** {bmi}")
+    st.write(f"**অবস্থা    :** {category}")
+    st.write("**Produced by REDWAN**")
